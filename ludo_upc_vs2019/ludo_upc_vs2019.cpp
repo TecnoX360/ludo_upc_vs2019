@@ -5,10 +5,23 @@
 using namespace System;
 using namespace std;
 
+#define N_casillas 58
+#define f 15
+#define c 15
+
 void mostrarPantallaPrincipal();
 void mostrarCreditos();
 void mostrarInstrucciones();
 void mostrarPantallaCarga();
+void Partida();
+void dibujarTablero(int tablero[f][c]);
+int Dado();
+void mostrarFicha(int px, int py, int caracter, int f_color);
+void borrarFicha(int px, int py, int tablero[f][c]);
+void moverFicha(int& i, int tablero[f][c]);
+void fichaAmarilla(int tablero[f][c]);
+void mostrarGanador();
+
 
 void mostrarPantallaPrincipal()
 {
@@ -89,7 +102,222 @@ void mostrarPantallaCarga()
 	cout << "88ee8 88ee    88e8 88  8 88   8 88ee8 88  8                                                                 " << endl;
 	_sleep(1250);
 	Console::Clear();
-	//Partida();
+	Partida();
+}
+
+void Partida()
+{
+	int tablero[f][c] =
+	{
+		{1,1,1,1,1,1,0,0,0,2,2,2,2,2,2},
+		{1,0,1,1,0,1,0,2,2,2,0,2,2,0,2},
+		{1,1,1,1,1,1,0,2,0,2,2,2,2,2,2},
+		{1,1,1,1,1,1,0,2,0,2,2,2,2,2,2},
+		{1,0,1,1,0,1,0,2,0,2,0,2,2,0,2},
+		{1,1,1,1,1,1,0,2,0,2,2,2,2,2,2},
+		{0,1,0,0,0,0,3,2,3,0,0,0,0,0,0},
+		{0,1,1,1,1,1,1,3,4,4,4,4,4,4,0},
+		{0,0,0,0,0,0,3,5,3,0,0,0,0,4,0},
+		{5,5,5,5,5,5,0,5,0,4,4,4,4,4,4},
+		{5,0,5,5,0,5,0,5,0,4,0,4,4,0,4},
+		{5,5,5,5,5,5,0,5,0,4,4,4,4,4,4},
+		{5,5,5,5,5,5,0,5,0,4,4,4,4,4,4},
+		{5,0,5,5,0,5,5,5,0,4,0,4,4,0,4},
+		{5,5,5,5,5,5,0,0,0,4,4,4,4,4,4}
+	};
+	dibujarTablero(tablero);
+	fichaAmarilla(tablero);
+}
+
+void dibujarTablero(int tablero[f][c])
+{
+	for (int i = 0; i < f; i++)
+	{
+		for (int j = 0; j < c; j++)
+		{
+			switch (tablero[i][j])
+			{
+			case 0: Console::ForegroundColor = ConsoleColor::Black; break;
+			case 1: Console::ForegroundColor = ConsoleColor::Green; break;
+			case 2: Console::ForegroundColor = ConsoleColor::Red; break;
+			case 3: Console::ForegroundColor = ConsoleColor::Gray; break;
+			case 4: Console::ForegroundColor = ConsoleColor::Blue; break;
+			case 5: Console::ForegroundColor = ConsoleColor::Yellow; break;
+			}
+			cout << (char)219;
+			Console::ForegroundColor = ConsoleColor::White;
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+struct Posicion { int x; int y; };
+
+int Dado()
+{
+	Random x;
+	int dado;
+	dado = x.Next(1, 7);
+	return dado;
+}
+
+void mostrarFicha(int px, int py, int caracter, int f_color)
+{
+	Console::SetCursorPosition(px, py);
+	Console::ForegroundColor = ConsoleColor(f_color);
+	Console::CursorVisible = false;
+	cout << (char)caracter;
+}
+
+void borrarFicha(int px, int py, int tablero[f][c])
+{
+	Console::SetCursorPosition(px, py);
+	cout << " ";
+}
+
+void moverFicha(int& i, int tablero[f][c])
+{
+	int tecla = getch();
+	if (tecla == 224)
+	{
+		tecla = getch();
+		switch (tecla)
+		{
+		case 80:
+			i++;
+			break;
+		case 72:
+			i += Dado();
+			break;
+		case 75:
+			i += Dado();
+			break;
+		case 77:
+			i += Dado();
+		}
+	}
+}
+
+void fichaAmarilla(int tablero[f][c])
+{
+	int i = 0;
+	Posicion* Arr = new Posicion[N_casillas];
+	Arr[0] = { 4,13 };
+	//1						
+	Arr[1] = { 6,13 };		
+	Arr[2] = { 6,12 };
+	Arr[3] = { 6,11 };
+	Arr[4] = { 6,10 };
+	Arr[5] = { 6,9 };
+	//2
+	Arr[6] = { 5,8 };
+	Arr[7] = { 4,8 };
+	Arr[8] = { 3,8 };
+	Arr[9] = { 2,8 };
+	Arr[10] = { 1,8 };
+	Arr[11] = { 0,8 };
+	Arr[12] = { 0,7 };
+	//3
+	Arr[13] = { 0,6 };
+	Arr[14] = { 1,6 };
+	Arr[15] = { 2,6 };
+	Arr[16] = { 3,6 };
+	Arr[17] = { 4,6 };
+	Arr[18] = { 5,6 };
+	//5
+	Arr[19] = { 6,5 };
+	Arr[20] = { 6,4 };
+	Arr[21] = { 6,3 };
+	Arr[22] = { 6,2 };
+	Arr[23] = { 6,1 };
+	Arr[24] = { 6,0 };
+	Arr[25] = { 7,0 };
+	Arr[26] = { 8,0 };
+	//6
+	Arr[27] = { 8,1 };
+	Arr[28] = { 8,2 };
+	Arr[29] = { 8,3 };
+	Arr[30] = { 8,4 };
+	Arr[31] = { 8,5 };
+	//7
+	Arr[32] = { 9,6 };
+	Arr[33] = { 10,6 };
+	Arr[34] = { 11,6 };
+	Arr[35] = { 12,6 };
+	Arr[36] = { 13,6 };
+	Arr[37] = { 14,6 };
+	//8
+	Arr[38] = { 14,7 };
+	Arr[39] = { 14,8 };
+	Arr[40] = { 13,8 };
+	Arr[41] = { 12,8 };
+	Arr[42] = { 11,8 };
+	Arr[43] = { 10,8 };
+	Arr[44] = { 9,8 };
+	//9
+	Arr[45] = { 8,9 };
+	Arr[46] = { 8,10 };
+	Arr[47] = { 8,11 };
+	Arr[48] = { 8,12 };
+	Arr[49] = { 8,13 };
+	Arr[50] = { 8,14 };
+	//columna
+	Arr[51] = { 7,14 };
+	Arr[52] = { 7,13 };
+	Arr[53] = { 7,12 };
+	Arr[54] = { 7,11 };
+	Arr[55] = { 7,10 };
+	Arr[56] = { 7,9 };
+	Arr[57] = { 7,8 };
+	while (1)
+	{
+		if (i != 57)
+		{
+			mostrarFicha(Arr[i].x, Arr[i].y, 64, 14);
+			if (kbhit())
+			{
+				_sleep(20);
+				borrarFicha(Arr[i].x, Arr[i].y, tablero);
+				moverFicha(i, tablero);
+			}
+		}
+		else
+		{
+			Console::BackgroundColor = ConsoleColor::Black;
+			mostrarFicha(Arr[i].x, Arr[i].y, 64, 14);
+			_sleep(1000);
+			mostrarGanador();
+		}
+	}
+};
+
+void mostrarGanador()
+{
+	int opc;
+	do {
+		Console::CursorVisible = true;
+		Console::Clear();
+		cout << "======================================================================" << endl;
+		cout << "=  ====  ====    ====  ====  =======  ====  ====  ==    ==  =======  =" << endl;
+		cout << "=   ==   ===  ==  ===  ====  =======  ====  ====  ===  ===   ======  =" << endl;
+		cout << "==  ==  ===  ====  ==  ====  =======  ====  ====  ===  ===    =====  =" << endl;
+		cout << "==  ==  ===  ====  ==  ====  =======  ====  ====  ===  ===  ==  ===  =" << endl;
+		cout << "===    ====  ====  ==  ====  =======   ==    ==  ====  ===  ===  ==  =" << endl;
+		cout << "====  =====  ====  ==  ====  ========  ==    ==  ====  ===  ====  =  =" << endl;
+		cout << "====  =====  ====  ==  ====  ========  ==    ==  ====  ===  =====    =" << endl;
+		cout << "====  ======  ==  ===   ==   =========    ==    =====  ===  ======   =" << endl;
+		cout << "====  =======    =====      ===========  ====  =====    ==  =======  =" << endl;
+		cout << "======================================================================" << endl;
+		cout << "profe, lo queremos mucho <3" << endl;
+		cout << "Ingrese 1 para volver al menú" << endl;
+		cin >> opc;
+		if (opc == 1)
+		{
+			_sleep(250); Console::Clear(); mostrarPantallaPrincipal();
+		}
+	} while (opc != 1);
+	getch();
 }
 
 int main()
