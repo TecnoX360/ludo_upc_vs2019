@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <iostream>
 #include <conio.h>
+#include <stdlib.h>
 
 using namespace System;
 using namespace std;
@@ -19,69 +20,71 @@ int Dado();
 void mostrarFicha(int px, int py, int caracter, int f_color);
 void borrarFicha(int px, int py, int tablero[f][c]);
 void moverFicha(int& i, int tablero[f][c]);
-void fichaAmarilla(int tablero[f][c]);
+void fichaAmarilla(int tablero[f][c], int ix, int iy);
 void mostrarGanador();
 
 
 void mostrarPantallaPrincipal()
 {
-	int opcion;
-	do {
-		Console::Clear();
-		Console::ForegroundColor = ConsoleColor::Red;
-		cout << "     __         _    __  _______   ______         _    __  ______   ______ " << endl;
-		cout << "    / /        //   / / //    ) ) //   ) )       //   / / //   ) ) //   )_)" << endl;
-		cout << "   / /        //   / / //    / / //   / /       //   / / //___/ / //       " << endl;
-		cout << "  / /        //   / / //    / / //   / /       //   / / / ____ / //        " << endl;
-		cout << " / /______  //   / / //    / / //   / /       //   / / //       //    __   " << endl;
-		cout << "/________/ ((___/_/ //____/ / ((___/_/       ((___/_/ //       ((____/_/   " << endl;
-		cout << "                                                                           " << endl;
-		cout << "     _______   _______     __  ________  __     ______         __          " << endl;
-		cout << "    //   /_/  //    ) )   / / /__  ___/ / /    //   ) ) /|    / /          " << endl;
-		cout << "   //____    //    / /   / /    / /    / /    //   / / //|   / /           " << endl;
-		cout << "  / ____/   //    / /   / /    / /    / /    //   / / // |  / /            " << endl;
-		cout << " //______  //    / /   / /    / /    / /    //   / / //  | / /             " << endl;
-		cout << "/_______/ //____/_/ __/_/___ /_/  __/ /___ ((___/_/ //   |/_/              " << endl;
-		cout << "                                                                           " << endl;
-		Console::ForegroundColor = ConsoleColor::White;
-		cout << "**** MENU DE OPCIONES ****" << endl;
-		cout << "1) Iniciar" << endl;
-		cout << "2) Creditos" << endl;
-		cout << "3) Instrucciones *progress" << endl;
-		cout << "4) Salir" << endl;
-		cout << "Ingresa tu opcion: "; cin >> opcion;
-		switch (opcion)
-		{
-		case 1: _sleep(250); Console::Clear(); mostrarPantallaCarga(); break;
-		case 2: _sleep(250); Console::Clear(); mostrarCreditos(); break;
-		case 3: _sleep(250); Console::Clear(); mostrarInstrucciones(); break;
-		}
-	} while (opcion <= 0 || opcion > 4);
+	Console::Clear();
+	Console::ForegroundColor = ConsoleColor::Red;
+	cout << "     __         _    __  _______   ______         _    __  ______   ______ " << endl;
+	cout << "    / /        //   / / //    ) ) //   ) )       //   / / //   ) ) //   )_)" << endl;
+	cout << "   / /        //   / / //    / / //   / /       //   / / //___/ / //       " << endl;
+	cout << "  / /        //   / / //    / / //   / /       //   / / / ____ / //        " << endl;
+	cout << " / /______  //   / / //    / / //   / /       //   / / //       //    __   " << endl;
+	cout << "/________/ ((___/_/ //____/ / ((___/_/       ((___/_/ //       ((____/_/   " << endl;
+	cout << "                                                                           " << endl;
+	cout << "     _______   _______     __  ________  __     ______         __          " << endl;
+	cout << "    //   /_/  //    ) )   / / /__  ___/ / /    //   ) ) /|    / /          " << endl;
+	cout << "   //____    //    / /   / /    / /    / /    //   / / //|   / /           " << endl;
+	cout << "  / ____/   //    / /   / /    / /    / /    //   / / // |  / /            " << endl;
+	cout << " //______  //    / /   / /    / /    / /    //   / / //  | / /             " << endl;
+	cout << "/_______/ //____/_/ __/_/___ /_/  __/ /___ ((___/_/ //   |/_/              " << endl;
+	cout << "                                                                           " << endl;
+	Console::ForegroundColor = ConsoleColor::White;
+	cout << "**** MENU DE OPCIONES ****" << endl;
+	cout << "Presione..." << endl;
+	cout << "1) Iniciar" << endl;
+	cout << "2) Creditos" << endl;
+	cout << "3) Instrucciones *progress" << endl;
+	cout << "Cualquier tecla: Salir" << endl;
+	int opcion = getch();
+	switch (opcion)
+	{
+	case 49: _sleep(250); Console::Clear(); mostrarPantallaCarga(); break;
+	case 50: _sleep(250); Console::Clear(); mostrarCreditos(); break;
+	case 51: _sleep(250); Console::Clear(); mostrarInstrucciones(); break;
+	}
 }
 
 void mostrarInstrucciones()
 {
-	char tecla[64];
 	cout << "¿COMO SE JUEGA?" << endl;
 	cout << "version de prueba Hito 2" << endl;
 	cout << "*******DISCULPE*******" << endl;
 	cout << "***ESTAMOS EN OBRAS***" << endl;
 	cout << "**********************" << endl;
 	cout << endl;
-	cout << "Ingrese cualquier tecla para regresar: "; cin >> tecla;
+	cout << "Presione cualquier tecla para regresar" << endl;
+	int opcion = getch();
 	_sleep(250);
 	mostrarPantallaPrincipal();
 }
 
 void mostrarCreditos()
 {
-	char tecla[64];
-	cout << "PROFE: BRAVO GARCIA, WILLIAM EDUARDO EL MAS BRAVO PE CAUSA" << endl;
-	cout << "SUS ESCLAVOS:" << endl;
-	cout << "- IRIARTE VELARDE, ALESSANDRA LA GIORGI (U202010003)" << endl;
-	cout << "- YEN QUISPE, MIJAEL GAAAAAA (U202010305)" << endl;
+	Console::ForegroundColor = ConsoleColor::Red;
+	cout << "PROFE: BRAVO GARCIA, WILLIAM EDUARDO" << endl;
 	cout << endl;
-	cout << "Ingrese cualquier tecla para regresar: "; cin >> tecla;
+	Console::ForegroundColor = ConsoleColor::Cyan;
+	cout << "ALUMNOS:" << endl;
+	cout << "- IRIARTE VELARDE, ALESSANDRA GIORGIANA (U202010003)" << endl;
+	cout << "- YEN QUISPE, MIJAEL ALEXANDER IMANOL (U202010305)" << endl;
+	cout << endl;
+	Console::ForegroundColor = ConsoleColor::Green;
+	cout << "Presione cualquier tecla para regresar" << endl;
+	int opcion = getch();
 	_sleep(250);
 	mostrarPantallaPrincipal();
 }
@@ -126,7 +129,8 @@ void Partida()
 		{5,5,5,5,5,5,0,0,0,4,4,4,4,4,4}
 	};
 	dibujarTablero(tablero);
-	fichaAmarilla(tablero);
+	fichaAmarilla(tablero,4,13);
+	fichaAmarilla(tablero,2,13);
 }
 
 void dibujarTablero(int tablero[f][c])
@@ -152,7 +156,10 @@ void dibujarTablero(int tablero[f][c])
 	cout << endl;
 }
 
-struct Posicion { int x; int y; };
+struct Posicion
+{
+	int x; int y;
+};
 
 int Dado()
 {
@@ -165,6 +172,7 @@ int Dado()
 void mostrarFicha(int px, int py, int caracter, int f_color)
 {
 	Console::SetCursorPosition(px, py);
+
 	Console::ForegroundColor = ConsoleColor(f_color);
 	Console::CursorVisible = false;
 	cout << (char)caracter;
@@ -179,7 +187,7 @@ void borrarFicha(int px, int py, int tablero[f][c])
 void moverFicha(int& i, int tablero[f][c])
 {
 	int tecla = getch();
-	if (tecla == 224)
+	/*if (tecla == 224)
 	{
 		tecla = getch();
 		switch (tecla)
@@ -189,21 +197,34 @@ void moverFicha(int& i, int tablero[f][c])
 			break;
 		case 72:
 			i += Dado();
+			Console::SetCursorPosition(15, 17);
+			cout << Dado() << endl;
 			break;
 		case 75:
 			i += Dado();
+			Console::SetCursorPosition(15, 17);
+			cout << Dado() << endl;
 			break;
 		case 77:
 			i += Dado();
+			Console::SetCursorPosition(15, 17);
+			cout << Dado() << endl;
 		}
+	}*/
+	if (tecla == 32)
+	{
+		i += Dado();
+		Console::SetCursorPosition(15, 17);
+		cout << Dado() << endl;
 	}
+
 }
 
-void fichaAmarilla(int tablero[f][c])
+void fichaAmarilla(int tablero[f][c], int ix, int iy)
 {
 	int i = 0;
 	Posicion* Arr = new Posicion[N_casillas];
-	Arr[0] = { 4,13 };
+	Arr[0] = { ix,iy };
 	//1						
 	Arr[1] = { 6,13 };		
 	Arr[2] = { 6,12 };
@@ -274,6 +295,8 @@ void fichaAmarilla(int tablero[f][c])
 	{
 		if (i != 57)
 		{
+			Console::SetCursorPosition(0, 17);
+			cout << "Tire el dado: ";
 			mostrarFicha(Arr[i].x, Arr[i].y, 64, 14);
 			if (kbhit())
 			{
@@ -282,11 +305,12 @@ void fichaAmarilla(int tablero[f][c])
 				moverFicha(i, tablero);
 			}
 		}
-		else
+		if(i>=58)
 		{
 			Console::BackgroundColor = ConsoleColor::Black;
-			mostrarFicha(Arr[i].x, Arr[i].y, 64, 14);
+			mostrarFicha(Arr[57].x, Arr[57].y, 64, 14);
 			_sleep(1000);
+			Console::Clear();
 			mostrarGanador();
 		}
 	}
@@ -294,35 +318,64 @@ void fichaAmarilla(int tablero[f][c])
 
 void mostrarGanador()
 {
-	int opc;
-	do {
-		Console::CursorVisible = true;
-		Console::Clear();
-		cout << "======================================================================" << endl;
-		cout << "=  ====  ====    ====  ====  =======  ====  ====  ==    ==  =======  =" << endl;
-		cout << "=   ==   ===  ==  ===  ====  =======  ====  ====  ===  ===   ======  =" << endl;
-		cout << "==  ==  ===  ====  ==  ====  =======  ====  ====  ===  ===    =====  =" << endl;
-		cout << "==  ==  ===  ====  ==  ====  =======  ====  ====  ===  ===  ==  ===  =" << endl;
-		cout << "===    ====  ====  ==  ====  =======   ==    ==  ====  ===  ===  ==  =" << endl;
-		cout << "====  =====  ====  ==  ====  ========  ==    ==  ====  ===  ====  =  =" << endl;
-		cout << "====  =====  ====  ==  ====  ========  ==    ==  ====  ===  =====    =" << endl;
-		cout << "====  ======  ==  ===   ==   =========    ==    =====  ===  ======   =" << endl;
-		cout << "====  =======    =====      ===========  ====  =====    ==  =======  =" << endl;
-		cout << "======================================================================" << endl;
-		cout << "profe, lo queremos mucho <3" << endl;
-		cout << "Ingrese 1 para volver al menú" << endl;
-		cin >> opc;
-		if (opc == 1)
-		{
-			_sleep(250); Console::Clear(); mostrarPantallaPrincipal();
-		}
-	} while (opc != 1);
-	getch();
+	Console::CursorVisible = true;
+	Console::Clear();
+	cout << "======================================================================" << endl;
+	cout << "=  ====  ====    ====  ====  =======  ====  ====  ==    ==  =======  =" << endl;
+	cout << "=   ==   ===  ==  ===  ====  =======  ====  ====  ===  ===   ======  =" << endl;
+	cout << "==  ==  ===  ====  ==  ====  =======  ====  ====  ===  ===    =====  =" << endl;
+	cout << "==  ==  ===  ====  ==  ====  =======  ====  ====  ===  ===  ==  ===  =" << endl;
+	cout << "===    ====  ====  ==  ====  =======   ==    ==  ====  ===  ===  ==  =" << endl;
+	cout << "====  =====  ====  ==  ====  ========  ==    ==  ====  ===  ====  =  =" << endl;
+	cout << "====  =====  ====  ==  ====  ========  ==    ==  ====  ===  =====    =" << endl;
+	cout << "====  ======  ==  ===   ==   =========    ==    =====  ===  ======   =" << endl;
+	cout << "====  =======    =====      ===========  ====  =====    ==  =======  =" << endl;
+	cout << "======================================================================" << endl;
+	cout << "Presione..." << endl;
+	cout << "Q para volver al menu" << endl;
+	cout << "E para salir" << endl;
+	int opcion = getch();
+	switch (opcion)
+	{
+	case 113: _sleep(250); Console::Clear(); mostrarPantallaPrincipal(); break;
+	case 101: exit(0); break;
+	}
 }
 
 int main()
 {
     mostrarPantallaPrincipal();
-    _getch();
     return 0;
 }
+
+/*void Jugar()
+{
+	Random dado;
+	int valor;
+	int turno = 1;
+	while (1)
+	{
+		cout << "Turno : " << turno << endl;
+		cout << "Presione tecla para lanzar dado: ";
+		if (_kbhit())
+		{
+			valor = dado.Next(1, 7);
+			RealizaryMostrarMovida(turno, valor, 1);
+			if (valor == 6)
+			{
+				valor = dado.Next(1, 7);
+				RealizaryMostrarMovida(turno, valor, 2);
+				if (valor == 6)
+				{
+					valor = dado.Next(1, 7);
+					if (valor < 6)
+						RealizaryMostrarMovida(turno, valor, 3);
+				}
+			}
+			turno++;
+			if (turno == 5)
+				turno = 1;
+		}
+	}
+
+}*/
